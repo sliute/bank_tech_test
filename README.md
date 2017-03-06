@@ -37,7 +37,15 @@ And the second one like so:
 $ 2.4.0 :005 > bank_account.withdraw(100)
 $ 2.4.0 :006 > bank_account.balance
 ```
-Also test for edge cases by attempting to:
+You may test for edge cases by attempting to:
 * deposit or withdraw negative amounts
 * deposit or withdraw non-numbers (i.e. strings, symbols, classes etc.)
 * withdraw more than the current balance
+
+Then test the third story like so:
+```
+$ 2.4.0 :007 > bank_account.statement
+```
+## Issues and Questions
+* Haven't created any new classes yet, beyond BankAcccount. That's because of what an [account](http://www.thefreedictionary.com/account) may mean (statement/record, process, relationship etc.)
+* Still have to beautify individual statement lines (for proper alignment)
