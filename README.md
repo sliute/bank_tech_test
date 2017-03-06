@@ -42,10 +42,18 @@ You may test for edge cases by attempting to:
 * deposit or withdraw non-numbers (i.e. strings, symbols, classes etc.)
 * withdraw more than the current balance
 
-Then test the third story like so:
-```
-$ 2.4.0 :007 > bank_account.statement
-```
+I have yet to develop the third user story.
+
 ## Issues and Questions
-* Haven't created any new classes yet, beyond BankAcccount. That's because of what an [account](http://www.thefreedictionary.com/account) may mean (statement/record, process, relationship etc.)
-* Still have to beautify individual statement lines (for proper alignment)
+* Have refactored for OOD. Switched to three different objects:
+  - `BankAccount`
+    - has a balance
+    - has a `TransactionLog` object
+    - knows two types of `Transaction` objects (#deposit, #withdraw)
+    - can #process_transaction accordingly
+  - `TransactionLog`
+    - has a `BankAccount`
+    - has a transactions array
+    - can #add `Transaction` objects to this array
+  - `Transaction` stores a date, a type (deposit or withdrawal), an amount and a resulting balance.
+* ...

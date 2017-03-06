@@ -2,31 +2,23 @@ require 'bank_account'
 
 describe BankAccount do
   subject(:bank_account) { described_class.new() }
-
-  context 'class accepts #new' do
-    subject(:bank_account_class) { described_class }
-
-    it { is_expected.to respond_to(:new) }
-  end
+  let(:transaction_log) { instance_double("TransactionLog") }
 
   context 'starts with' do
     it 'zero balance' do
       expect(bank_account.balance).to eq 0
     end
 
-    it 'an empty log' do
-      expect(bank_account.log).to eq []
-    end
-
-    it 'and an empty statement' do
-      expect(bank_account.statement).to eq "date       || credit || debit   || balance"
+    it 'an associated transaction log' do
+      expect(bank_account.transaction_log).to be_a TransactionLog
     end
   end
 
-  context 'depositing money works' do
+  context 'can be used to deposit money' do
     it 'via #deposit(amt)' do
       bank_account.deposit(500)
       expect(bank_account.balance).to eq 500
+      expect(bank_account.transaction_log.transactions[0].balance).to eq 500
     end
 
     it 'and only with numbers' do
@@ -40,11 +32,12 @@ describe BankAccount do
     end
   end
 
-  context 'withdrawing money works' do
+  context 'can be used to withdraw money' do
     it 'via #withdraw(amt)' do
       bank_account.deposit(500)
       bank_account.withdraw(50)
       expect(bank_account.balance).to eq 450
+      expect(bank_account.transaction_log.transactions[1].balance).to eq 450
     end
 
     it 'and only with numbers' do
@@ -61,15 +54,6 @@ describe BankAccount do
       message = 'Nope. That\'s more money than your current balance. Please contact us for overdraft or credit facilities.'
       bank_account.deposit(500)
       expect{ bank_account.withdraw(501) }.to raise_error(message)
-    end
-  end
-
-  context 'seeing a bank statement works' do
-    it 'via #statement' do
-      bank_account.deposit(300)
-      bank_account.withdraw(200)
-      message = "date       || credit || debit   || balance\n" + Time.now.strftime('%d/%m/%Y') + " ||  || 200 || 100\n" + Time.now.strftime('%d/%m/%Y') + " || 300 ||  || 300"
-      expect(bank_account.statement).to eq message
     end
   end
 end
