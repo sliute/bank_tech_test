@@ -1,4 +1,4 @@
-# Bank Tech Test
+# Bank Tech Test [![Code Climate](https://codeclimate.com/github/sliute/bank_tech_test/badges/gpa.svg)](https://codeclimate.com/github/sliute/bank_tech_test)
 
 ## User Stories
 
