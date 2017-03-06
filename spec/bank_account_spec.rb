@@ -9,6 +9,20 @@ describe BankAccount do
     it { is_expected.to respond_to(:new) }
   end
 
+  context 'starts with' do
+    it 'zero balance' do
+      expect(bank_account.balance).to eq 0
+    end
+
+    it 'an empty log' do
+      expect(bank_account.log).to eq []
+    end
+
+    it 'and an empty statement' do
+      expect(bank_account.statement).to eq "date       || credit || debit   || balance"
+    end
+  end
+
   context 'depositing money works' do
     it 'via #deposit(amt)' do
       bank_account.deposit(500)
@@ -54,7 +68,7 @@ describe BankAccount do
     it 'via #statement' do
       bank_account.deposit(300)
       bank_account.withdraw(200)
-      message = "date       || credit || debit   || balance\n06/03/2017 ||  || 200 || 100\n06/03/2017 || 300 ||  || 300"
+      message = "date       || credit || debit   || balance\n" + Time.now.strftime('%d/%m/%Y') + " ||  || 200 || 100\n" + Time.now.strftime('%d/%m/%Y') + " || 300 ||  || 300"
       expect(bank_account.statement).to eq message
     end
   end
