@@ -6,7 +6,7 @@ class BankAccount
   INITIAL_BALANCE = 0
   attr_reader :balance, :transaction_log
 
-  def initialize()
+  def initialize
     @balance = INITIAL_BALANCE
     @transaction_log = TransactionLog.new({bank_account: self})
   end

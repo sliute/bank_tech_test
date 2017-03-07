@@ -5,8 +5,8 @@ describe BankAccount do
   let(:transaction_log) { instance_double("TransactionLog") }
 
   context 'starts with' do
-    it 'zero balance' do
-      expect(bank_account.balance).to eq 0
+    it 'a default balance' do
+      expect(bank_account.balance).to eq described_class::INITIAL_BALANCE
     end
 
     it 'an associated transaction log' do

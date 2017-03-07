@@ -16,7 +16,7 @@ So I can (painfully) remember what I did with my money,
 I want to be able to see a bank statement.
 ```
 
-## How to Use
+## How to Deploy, Test and Use
 
 ```
 $ git clone https://github.com/sliute/bank_tech_test.git
@@ -42,18 +42,28 @@ You may test for edge cases by attempting to:
 * deposit or withdraw non-numbers (i.e. strings, symbols, classes etc.)
 * withdraw more than the current balance
 
-I have yet to develop the third user story.
+Test the third user story like so:
+```
+$ 2.4.0 :007 > require './lib/statement'
+$ 2.4.0 :008 > puts Statement.new(bank_account).list
 
-## Issues and Questions
-* Have refactored for OOD. Switched to three different objects:
+```
+This generates a multi-line statement formated as per the acceptance criteria (aligned and multi-line, with transactions listed newest first).
+
+## Progress and Issues
+* After doing everything in one class, I have refactored for OOD. Switched to four different objects:
   - `BankAccount`
-    - has a balance
+    - has a balance variable (Numeric)
     - has a `TransactionLog` object
     - knows two types of `Transaction` objects (#deposit, #withdraw)
     - can #process_transaction accordingly
   - `TransactionLog`
     - has a `BankAccount`
-    - has a transactions array
+    - has a transactions variable (Array)
     - can #add `Transaction` objects to this array
   - `Transaction` stores a date, a type (deposit or withdrawal), an amount and a resulting balance.
-* ...
+  - `Statement`
+    - stores a `BankAccount`'s `TransactionLog`
+    - can #list the transactions in that log in the required format
+* Not sure, but `BankAccount` might use a #statement method that does this: `puts Statement.new(bank_account).list`
+* Not sure if user should be able to deposit/withdraw on dates other than the current day. This does not happen in real life (transactions cannot be back-dated, and payments can be scheduled for future times, but withdrawals can't).
